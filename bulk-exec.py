@@ -23,7 +23,8 @@ if any(cmd.startswith('sudo ') for cmd in cmds):
     # this will probably break if the actual command contains quotes...
     cmds = [re.sub('^sudo (.*)', rf'sudo -k -S -s "\1"\n{sudo_pwd}', cmd) for cmd in cmds]
 
-print(cmds)
+# tell everyone what commands we're going to execute
+print("Commands to execute:\n{}\n".format(cmds))
 
 # for each host in our host list file
 for host in [h.strip() for h in hosts]:
