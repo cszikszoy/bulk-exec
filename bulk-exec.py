@@ -24,12 +24,12 @@ if any(cmd.startswith('sudo ') for cmd in cmds):
     cmds = [re.sub('^sudo (.*)', rf'sudo -k -S -s "\1"\n{sudo_pwd}', cmd) for cmd in cmds]
 
 # tell everyone what commands we're going to execute
-print("Commands to execute:\n{}\n".format(cmds))
+print(f"Commands to execute:\n{cmds}\n")
 
 # for each host in our host list file
 for host in [h.strip() for h in hosts]:
     # tell everyone what host we're on
-    print("Connecting to {}...".format(host))
+    print(f"Connecting to {host}...")
 
     # create a ssh subprocess, using the identity file in $HOME/.ssh/
     ssh = subprocess.Popen(["ssh", "-T", "-i", "{0}/.ssh/id_rsa".format(expanduser("~")), host],
