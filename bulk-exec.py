@@ -27,7 +27,7 @@ if any(cmd.startswith('sudo ') for cmd in cmds):
     # -S no TTY (so we enter a password on stdin)
     # -s execute using $SHELL
     # this will probably break if the actual command contains quotes...
-    cmds = [re.sub('^sudo (.*)', rf'sudo -k -S -s "\1"\n{sudo_pwd}', cmd) for cmd in cmds]
+    cmds = [re.sub('^sudo (.*)', rf'sudo -k -S sh -c "\1"\n{sudo_pwd}', cmd) for cmd in cmds]
 
 # for each host in our host list file
 for host in [h.strip() for h in hosts]:
