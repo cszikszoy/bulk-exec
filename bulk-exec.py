@@ -21,7 +21,7 @@ if any(cmd.startswith('sudo ') for cmd in cmds):
 
     # prepend any sudoo commands with -k -S -s and wrap it in quotes
     # -k expire timestamp so sudo asks for a password each time
-    # -S no TTY (so we can enter a password)
+    # -S no TTY (so we enter a password on stdin)
     # -s execute using $SHELL
     # this will probably break if the actual command contains quotes...
     cmds = [re.sub('^sudo (.*)', rf'sudo -k -S -s "\1"\n{sudo_pwd}', cmd) for cmd in cmds]
