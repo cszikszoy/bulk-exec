@@ -12,6 +12,9 @@ hosts = open(sys.argv[1], "r+").readlines()
 # get commands from command list file
 cmds = open(sys.argv[2], "r+").readlines()
 
+# get $HOME
+home = expanduser("~")
+
 # if any commands start with sudo, ask for password
 if any(cmd.startswith('sudo ') for cmd in cmds):
     sudo_pwd = getpass("Enter sudo password:")
@@ -32,7 +35,7 @@ for host in [h.strip() for h in hosts]:
     print(f"Connecting to {host}...")
 
     # create a ssh subprocess, using the identity file in $HOME/.ssh/
-    ssh = subprocess.Popen(["ssh", "-T", "-i", "{0}/.ssh/id_rsa".format(expanduser("~")), host],
+    ssh = subprocess.Popen(["ssh", "-T", "-i", f"{home}/.ssh/id_rsa", host],
                             stdin = subprocess.PIPE,
                             stdout = subprocess.PIPE,
                             stderr = subprocess.PIPE,
