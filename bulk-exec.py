@@ -15,6 +15,9 @@ cmds = open(sys.argv[2], "r+").readlines()
 # get $HOME
 home = expanduser("~")
 
+# tell everyone what commands we're going to execute
+print(f"Commands to execute:\n{cmds}\n")
+
 # if any commands start with sudo, ask for password
 if any(cmd.startswith('sudo ') for cmd in cmds):
     sudo_pwd = getpass("Enter sudo password:")
@@ -25,9 +28,6 @@ if any(cmd.startswith('sudo ') for cmd in cmds):
     # -s execute using $SHELL
     # this will probably break if the actual command contains quotes...
     cmds = [re.sub('^sudo (.*)', rf'sudo -k -S -s "\1"\n{sudo_pwd}', cmd) for cmd in cmds]
-
-# tell everyone what commands we're going to execute
-print(f"Commands to execute:\n{cmds}\n")
 
 # for each host in our host list file
 for host in [h.strip() for h in hosts]:
