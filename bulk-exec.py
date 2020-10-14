@@ -6,11 +6,21 @@ import subprocess
 from getpass import getpass
 from os.path import expanduser
 
+def strip_comments(list):
+    """Take list of commands as args, return list of commands minus any comment lines (starting with #)."""
+    return [i for i in list if not i.startswith('#')]
+
 # get hosts from host list file
 hosts = open(sys.argv[1], "r+").readlines()
 
+# strip any comments from the hosts file
+hosts = strip_comments(hosts)
+
 # get commands from command list file
 cmds = open(sys.argv[2], "r+").readlines()
+
+# strip any comments from the commands file
+cmds = strip_comments(cmds)
 
 # get $HOME
 home = expanduser("~")
